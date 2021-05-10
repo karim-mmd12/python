@@ -1,42 +1,54 @@
 from player import Player
+import time
 
 
 class Game():
     def __init__(self, board_size=10):
-        self.board = [' ' for i in range(board_size*board_size)]
+        self.board_size = board_size
+        self.board = [' ' for i in range(self.board_size*self.board_size)]
 
-    @staticmethod
-    def print_board_with_numbers():
-        number_board = [['0'+str(j) if j < 10 else str(j) for j in range(i*10, (i+1)*10)]
-                        for i in range(10)]
+    def print_board_with_numbers(self):
+        number_board = [[str(j)
+                         for j in range(i*self.board_size, (i+1)*self.board_size)] for i in range(self.board_size)]
         for row in number_board:
-            print('| ' + ' | '.join(row) + ' |')
+            print(' | '.join([num.rjust(3) for num in row]))
 
     def empty_squares(self):
-        return ' '
+        return ' ' in self.board
+
+    def available_moves(self):
+        return [i for i, x in enumerate(self.board) if x == ' ']
 
     def draw(self):
-        pass
+        for row in [self.board[i*self.board_size:(i+1) * self.board_size] for i in range(self.board_size)]:
+            print(' | '.join([str(j).rjust(3) for j in row]))
 
-    def play(self, p1, p2):
+    def play(self, game, x_player, y_player):
 
-        Game.print_board_with_numbers()
+        game.print_board_with_numbers()
 
-        player_name = 'p2'
-        # check if empty squares around player only-no walls or other player
+        player_name = 'P1'
+        # check if still empty squares in board
         while self.empty_squares():
-            if p1.name == player_name:
-                position = p1.get_position()
+            if x_player.name == player_name:
+                position = x_player.get_position(self)
             else:
-                player_name = 'p2'
-                position = p2.get_position()
-
+                position = y_player.get_position(self)
+            x_player.move(self, tuple(position)) if player_name == 'P1' else y_player.move(
+                self, tuple(position))
             print(f"{player_name} moves to position {position}")
+            # draw board
             self.draw()
+            # check winner
+            # return player_name ends the loop and exits the game
+            # switches player
+            player_name = 'P2' if player_name == 'P1' else 'P1'
+            time.sleep(.7)
+        print('No body wins!')
 
 
 if __name__ == '__main__':
-    p1 = Player('p1', 95)
-    p2 = Player('p2', 5)
+    p1 = Player('P1', (95,))
+    p2 = Player('P2', (5,))
     q = Game()
-    q.play(p1, p2)
+    q.play(q, p1, p2)
