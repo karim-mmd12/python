@@ -1,12 +1,24 @@
 class Player():
-    def __init__(self, name, position):
+    def __init__(self, game, name, position):
         self.name = name
-        self.starting_position = position
+        self.start = position
         self.position = position
 
-        print(f"{self.name}{self.starting_position}")
+        print(f"{self.name}{self.start}")
+        # when players created, they automatically added to the game
+        game.add_player(self)
+
+    def play(self):
+        pass
+
+    def place_wall(self, position):
+        pass
+
+    def is_winner(self):
+        pass
 
     # return position if empty
+
     def get_position(self, game):
         valid_square = False
         pos = None

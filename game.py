@@ -3,15 +3,31 @@ import time
 
 
 class Game():
+    B_S = 10
+    nb_players = 0
+    players = []
+
     def __init__(self, board_size=10):
         self.board_size = board_size
         self.board = [' ' for i in range(self.board_size*self.board_size)]
 
-    def print_board_with_numbers(self):
+    @classmethod
+    def print_board_with_numbers(cls):
         number_board = [[str(j)
-                         for j in range(i*self.board_size, (i+1)*self.board_size)] for i in range(self.board_size)]
+                         for j in range(i*cls.B_S, (i+1)*cls.B_S)] for i in range(cls.B_S)]
         for row in number_board:
             print(' | '.join([num.rjust(3) for num in row]))
+
+    @classmethod
+    def add_player(cls, player):
+        cls.players.append(player)
+        cls.nb_players = len(cls.players)
+
+    def add_wall(self, position):
+        pass
+
+    def is_wall(self, position):
+        pass
 
     def empty_squares(self):
         return ' ' in self.board
@@ -23,10 +39,9 @@ class Game():
         for row in [self.board[i*self.board_size:(i+1) * self.board_size] for i in range(self.board_size)]:
             print(' | '.join([str(j).rjust(3) for j in row]))
 
-    def play(self, game, x_player, y_player):
-
-        game.print_board_with_numbers()
-
+    def play(self):
+        Game.print_board_with_numbers()
+        x_player, y_player = Game.players[0:3]
         player_name = 'P1'
         # check if still empty squares in board
         while self.empty_squares():
@@ -41,14 +56,15 @@ class Game():
             self.draw()
             # check winner
             # return player_name ends the loop and exits the game
-            # switches player
+
+            # switches players
             player_name = 'P2' if player_name == 'P1' else 'P1'
             time.sleep(.7)
         print('No body wins!')
 
 
 if __name__ == '__main__':
-    p1 = Player('P1', (95,))
-    p2 = Player('P2', (5,))
-    q = Game()
-    q.play(q, p1, p2)
+    game = Game()
+    Player(game, 'P1', (95,))
+    Player(game, 'P2', (5,))
+    game.play()
