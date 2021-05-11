@@ -10,6 +10,7 @@ class Game():
     def __init__(self, board_size=10):
         self.board_size = board_size
         self.board = [' ' for i in range(self.board_size*self.board_size)]
+        self.winner = None
 
     @classmethod
     def print_board_with_numbers(cls):
@@ -55,6 +56,9 @@ class Game():
             # draw board
             self.draw()
             # check winner
+            if self.winner:
+                print(f'{self.winner} wins!')
+                return True
             # return player_name ends the loop and exits the game
 
             # switches players

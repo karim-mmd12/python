@@ -15,7 +15,14 @@ class Player():
         pass
 
     def is_winner(self):
-        pass
+        winner = False
+        if self.start[0] in range(90, 100):
+            if self.name == 'P1' and self.position[0] in range(0, 10):
+                winner = True
+        if self.start[0] in range(0, 10):
+            if self.name == 'P2' and self.position[0] in range(90, 100):
+                winner = True
+        return winner
 
     # return position if empty
 
@@ -40,5 +47,5 @@ class Player():
             old_pos = self.position
             game.board[old_pos[0]] = ' '
             self.position = new_position
-            # if self.winner(position, player_name):
-            #     self.current_winner = player_name
+            if self.is_winner():
+                game.winner = self.name
