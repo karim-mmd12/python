@@ -37,8 +37,12 @@ class Game():
         return [i for i, x in enumerate(self.board) if x == ' ']
 
     def draw(self):
+        count = 0
+        print('   '.join([str(i).rjust(3) for i in range(10)]))
         for row in [self.board[i*self.board_size:(i+1) * self.board_size] for i in range(self.board_size)]:
-            print(' | '.join([str(j).rjust(3) for j in row]))
+            print(str(count) + ' . '.join([str(j).rjust(3) for j in row]))
+            print('\n')
+            count += 1
 
     def play(self):
         Game.print_board_with_numbers()

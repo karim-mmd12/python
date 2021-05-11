@@ -1,3 +1,6 @@
+import math
+
+
 class Player():
     def __init__(self, game, name, position):
         self.name = name
@@ -34,7 +37,7 @@ class Player():
                 self.name + ' turn. Input adjacent position (0-99): ')
             try:
                 pos = int(square)
-                if pos not in game.available_moves():
+                if pos not in game.available_moves() or math.fabs(self.position[0] - pos) not in [1, 10]:
                     raise ValueError
                 valid_square = True
             except ValueError:
