@@ -6,6 +6,7 @@ class Game():
     B_S = 10
     nb_players = 0
     players = []
+    WALL = '###'
 
     def __init__(self, board_size=10):
         self.board_size = board_size
@@ -25,10 +26,10 @@ class Game():
         cls.nb_players = len(cls.players)
 
     def add_wall(self, position):
-        pass
+        self.board[position[0]] = Game.WALL
 
     def is_wall(self, position):
-        pass
+        return self.board[position[0]] == Game.WALL
 
     def empty_squares(self):
         return ' ' in self.board
@@ -54,7 +55,7 @@ class Game():
                 position = x_player.get_position(self)
             else:
                 position = y_player.get_position(self)
-            x_player.move(self, tuple(position)) if player_name == 'P1' else y_player.move(
+            x_player.play(self, tuple(position)) if player_name == 'P1' else y_player.play(
                 self, tuple(position))
             print(f"{player_name} moves to position {position}")
             # draw board
@@ -75,4 +76,6 @@ if __name__ == '__main__':
     game = Game()
     Player(game, 'P1', (95,))
     Player(game, 'P2', (5,))
+    game.board[95] = 'P1'
+    game.board[5] = 'P2'
     game.play()
