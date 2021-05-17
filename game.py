@@ -1,4 +1,3 @@
-from player import Player
 import time
 
 
@@ -70,12 +69,3 @@ class Game():
             player_name = 'P2' if player_name == 'P1' else 'P1'
             time.sleep(.7)
         print('No body wins!')
-
-
-if __name__ == '__main__':
-    game = Game()
-    Player(game, 'P1', (95,))
-    Player(game, 'P2', (5,))
-    game.board[95] = 'P1'
-    game.board[5] = 'P2'
-    game.play()
