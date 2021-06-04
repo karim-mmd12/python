@@ -12,6 +12,8 @@ class Player():
         # when players created, they automatically added to the game
         game.add_player(self)
 
+    # static method it is like helper function. we do not use instance variables like the ones in the init method
+
     @staticmethod
     def get_input_letter(player):
         valid_letter = False
@@ -20,6 +22,7 @@ class Player():
             character = input(
                 player.name + ' turn. Enter letter \"p\" for moving player or letter \"w\" for placing a wall: ')
             try:
+                # we put try because the code might have an error o9
                 letter = character.strip().lower()
                 if letter not in ['p', 'w']:
                     raise ValueError
@@ -27,11 +30,13 @@ class Player():
             except ValueError:
                 print('Invalid letter. Try again.')
         return letter
+# [' ', ' ',' ', ' p1',' ', ' ']
 
     def play(self, game, position):
         # move or place a wall
         self.move(game, position) if self.letter == 'p' else self.place_wall(
             game, position)
+    # board = ['###', ' ', ' ']
 
     def place_wall(self, game, wall_position):
         if not game.is_wall(wall_position):
@@ -66,7 +71,10 @@ class Player():
             square = input(
                 self.name + txt)
             try:
+                # 95
                 pos = int(square)
+                # player is in 94 current position. we need to move it to 93 but we cannot because 93 has a wall or another player so we loop again and ask the user to enter another position. so we enter position 95. we know that 95 is empty
+                # current position = 94
                 current_position = self.position[0]
                 if Player.not_valid_position(pos, game, letter, current_position):
                     raise ValueError
@@ -74,6 +82,8 @@ class Player():
             except ValueError:
                 print('Invalid position. Try again.')
         self.letter = letter
+        # letter is either p or w
+        # [94]
         return [pos]
 
     def move(self, game, new_position):

@@ -18,6 +18,7 @@ class Game():
         # i = 0, 1,2,3,4....99
         self.board = [' ' for i in range(self.board_size*self.board_size)]
         self.winner = None
+        self.walls_count = 2
 
     @classmethod
     def print_board_with_numbers(cls):
@@ -61,7 +62,8 @@ class Game():
     def play(self):
         # board with numbers
         Game.print_board_with_numbers()
-        x_player, y_player = Game.players[0:3]
+        # x_player is the p1 and y_player is the p2
+        x_player, y_player = Game.players[0:2]
         player_name = 'P1'
         # check if still empty squares in board
         # ['p1','p2','###','###',]
@@ -72,6 +74,7 @@ class Game():
                 position = y_player.get_position(self)
             x_player.play(self, tuple(position)) if player_name == 'P1' else y_player.play(
                 self, tuple(position))
+            # tuple([95])
             print(f"{player_name} moves to position {position}")
             # draw board
             self.draw()
