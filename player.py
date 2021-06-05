@@ -7,7 +7,7 @@ class Player():
         self.name = name
         self.start = starting_point
         self.position = starting_point
-
+        self.walls_count = game.walls_count
         print(f"{self.name}{self.start}")
         # when players created, they automatically added to the game
         game.add_player(self)
@@ -40,7 +40,12 @@ class Player():
 
     def place_wall(self, game, wall_position):
         if not game.is_wall(wall_position):
-            game.add_wall(wall_position)
+            if self.walls_count > 0:
+                game.add_wall(wall_position)
+                # self.walls_count = self.walls_count -1
+                self.walls_count -= 1
+            else:
+                print("No more walls")
 
     def is_winner(self):
         winner = False
